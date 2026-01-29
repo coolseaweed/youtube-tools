@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-YouTube 다국어 자막 일괄 업로드 스크립트
+YouTube 다국어 메타데이터 업로드 스크립트
 
 사용법:
-    # 영상 업로드 + 자막 + 다국어 메타데이터
-    python upload.py video.mp4 --captions ./captions/
+    # 영상 업로드 + 다국어 메타데이터
+    python upload.py video.mp4 --metadata ./metadata.json
 
-    # 기존 영상에 자막만 추가
-    python upload.py --video-id "VIDEO_ID" --captions ./captions/
+    # 기존 영상에 메타데이터 업데이트
+    python upload.py --video-id "VIDEO_ID" --metadata ./metadata.json
 """
 
 import argparse
@@ -56,11 +56,11 @@ def get_authenticated_service():
     return build("youtube", "v3", credentials=creds)
 
 
-def load_metadata(captions_dir: str) -> dict | None:
-    """captions 폴더에서 metadata.json 로드"""
-    metadata_path = Path(captions_dir) / "metadata.json"
-    if metadata_path.exists():
-        with open(metadata_path, encoding="utf-8") as f:
+def load_metadata(metadata_path: str) -> dict | None:
+    """metadata.json 로드"""
+    path = Path(metadata_path)
+    if path.exists():
+        with open(path, encoding="utf-8") as f:
             return json.load(f)
     return None
 
@@ -175,61 +175,12 @@ def update_localizations(youtube, video_id: str, metadata: dict) -> bool:
         return False
 
 
-def upload_caption(youtube, video_id: str, caption_path: Path, language: str) -> bool:
-    """단일 자막 파일 업로드"""
-    try:
-        body = {
-            "snippet": {
-                "videoId": video_id,
-                "language": language,
-                "name": language,
-                "isDraft": False,
-            }
-        }
-
-        media = MediaFileUpload(str(caption_path), mimetype="application/x-subrip")
-
-        youtube.captions().insert(part="snippet", body=body, media_body=media).execute()
-
-        return True
-    except Exception as e:
-        print(f"  오류 ({language}): {e}")
-        return False
-
-
-def upload_captions(youtube, video_id: str, captions_dir: str) -> tuple[list, list]:
-    """자막 폴더 내 모든 SRT 파일 업로드"""
-    captions_path = Path(captions_dir)
-    srt_files = sorted(captions_path.glob("*.srt"))
-
-    if not srt_files:
-        print(f"경고: {captions_dir}에 SRT 파일이 없습니다.")
-        return [], []
-
-    print(f"\n자막 업로드 시작: {len(srt_files)}개 파일")
-
-    success = []
-    failed = []
-
-    for srt_file in srt_files:
-        language = srt_file.stem  # 파일명에서 확장자 제외 = 언어코드
-        print(f"  [{language}] {srt_file.name}...", end=" ")
-
-        if upload_caption(youtube, video_id, srt_file, language):
-            print("완료")
-            success.append(language)
-        else:
-            failed.append(language)
-
-    return success, failed
-
-
 def main():
-    parser = argparse.ArgumentParser(description="YouTube 다국어 자막 일괄 업로드")
+    parser = argparse.ArgumentParser(description="YouTube 다국어 메타데이터 업로드")
 
     parser.add_argument("video", nargs="?", help="업로드할 영상 파일 경로")
-    parser.add_argument("--video-id", help="기존 영상 ID (자막만 추가할 경우)")
-    parser.add_argument("--captions", required=True, help="자막 폴더 경로 (metadata.json 포함)")
+    parser.add_argument("--video-id", help="기존 영상 ID (메타데이터만 업데이트)")
+    parser.add_argument("--metadata", required=True, help="metadata.json 파일 경로")
     parser.add_argument(
         "--privacy",
         default="private",
@@ -247,14 +198,14 @@ def main():
         print(f"오류: 영상 파일을 찾을 수 없습니다: {args.video}")
         sys.exit(1)
 
-    if not os.path.isdir(args.captions):
-        print(f"오류: 자막 폴더를 찾을 수 없습니다: {args.captions}")
+    if not os.path.exists(args.metadata):
+        print(f"오류: 메타데이터 파일을 찾을 수 없습니다: {args.metadata}")
         sys.exit(1)
 
     # 메타데이터 로드
-    metadata = load_metadata(args.captions)
+    metadata = load_metadata(args.metadata)
     if metadata:
-        print(f"메타데이터 로드: {args.captions}/metadata.json")
+        print(f"메타데이터 로드: {args.metadata}")
 
     # 인증
     youtube = get_authenticated_service()
@@ -270,20 +221,12 @@ def main():
     else:
         video_id = upload_video(youtube, args.video, metadata, args.privacy)
 
-    # 자막 업로드
-    success, failed = upload_captions(youtube, video_id, args.captions)
-
     # 결과 출력
     print("\n" + "=" * 50)
     print("업로드 결과")
     print("=" * 50)
     print(f"영상 ID: {video_id}")
     print(f"영상 URL: https://youtube.com/watch?v={video_id}")
-    print(f"자막 성공: {len(success)}개 - {', '.join(success) if success else '없음'}")
-    print(f"자막 실패: {len(failed)}개 - {', '.join(failed) if failed else '없음'}")
-
-    if failed:
-        sys.exit(1)
 
 
 if __name__ == "__main__":
