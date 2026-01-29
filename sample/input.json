@@ -5,6 +5,7 @@
   "source_lang": "ko",
   "gemini_model": "gemini-2.5-flash-lite",
   "max_workers": 10,
+  "prompt": "./prompt.txt",
   "langs": [
     "af",
     "ar",

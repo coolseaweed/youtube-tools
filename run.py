@@ -116,14 +116,21 @@ TOKEN_FILE = "token.json"
 
 # === Translation ===
 
-def translate_text(client, text: str, target_lang: str, lang_name: str, model: str) -> str:
-    """Gemini로 텍스트 번역"""
-    prompt = f"""Translate the following text to {lang_name} ({target_lang}).
+DEFAULT_PROMPT_TEMPLATE = """Translate the following text to {lang_name} ({target_lang}).
 Only return the translated text, nothing else.
 Keep the tone and style appropriate for YouTube video metadata.
 
 Text to translate:
 {text}"""
+
+
+def translate_text(client, text: str, target_lang: str, lang_name: str, model: str, prompt_template: str) -> str:
+    """Gemini로 텍스트 번역"""
+    prompt = prompt_template.format(
+        lang_name=lang_name,
+        target_lang=target_lang,
+        text=text,
+    )
 
     response = client.models.generate_content(
         model=model,
@@ -132,19 +139,19 @@ Text to translate:
     return response.text.strip()
 
 
-def translate_single_lang(client, title: str, description: str, lang: str, model: str) -> tuple[str, dict | None, str | None]:
+def translate_single_lang(client, title: str, description: str, lang: str, model: str, prompt_template: str) -> tuple[str, dict | None, str | None]:
     """단일 언어 번역 (병렬 처리용)"""
     lang_name = YOUTUBE_LANGUAGES.get(lang, lang)
     try:
-        translated_title = translate_text(client, title, lang, lang_name, model)
-        translated_desc = translate_text(client, description, lang, lang_name, model)
+        translated_title = translate_text(client, title, lang, lang_name, model, prompt_template)
+        translated_desc = translate_text(client, description, lang, lang_name, model, prompt_template)
         return lang, {"title": translated_title, "description": translated_desc}, None
     except Exception as e:
         return lang, None, str(e)
 
 
 def translate_metadata(
-    client, title: str, description: str, source_lang: str, target_langs: list[str], model: str, max_workers: int = 10
+    client, title: str, description: str, source_lang: str, target_langs: list[str], model: str, prompt_template: str, max_workers: int = 10
 ) -> dict:
     """메타데이터를 여러 언어로 병렬 번역"""
     metadata = {
@@ -167,7 +174,7 @@ def translate_metadata(
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {
-            executor.submit(translate_single_lang, client, title, description, lang, model): lang
+            executor.submit(translate_single_lang, client, title, description, lang, model, prompt_template): lang
             for lang in target_langs
         }
 
@@ -215,6 +222,14 @@ def get_authenticated_service():
     return build("youtube", "v3", credentials=creds)
 
 
+# YouTube API 언어 코드 변환 (일부 코드가 다름)
+YOUTUBE_LANG_MAP = {
+    "iw": "he",  # Hebrew
+    "zh-CN": "zh-Hans",
+    "zh-TW": "zh-Hant",
+}
+
+
 def upload_video(youtube, video_path: str, metadata: dict, privacy: str) -> str:
     """영상 업로드 후 video_id 반환"""
     print(f"영상 업로드 중: {video_path}")
@@ -225,11 +240,19 @@ def upload_video(youtube, video_path: str, metadata: dict, privacy: str) -> str:
 
     localizations = {}
     for lang, data in metadata.items():
-        if lang != "default":
-            localizations[lang] = {
-                "title": data.get("title", title),
-                "description": data.get("description", description),
-            }
+        if lang == "default" or not data:
+            continue
+        # 유효한 데이터만 포함
+        loc_title = data.get("title")
+        loc_desc = data.get("description")
+        if not loc_title or not loc_desc:
+            continue
+        # YouTube API 언어 코드로 변환
+        yt_lang = YOUTUBE_LANG_MAP.get(lang, lang)
+        localizations[yt_lang] = {
+            "title": loc_title,
+            "description": loc_desc,
+        }
 
     body = {
         "snippet": {
@@ -311,6 +334,21 @@ def main():
     gemini_model = config.get("gemini_model", DEFAULT_GEMINI_MODEL)
     max_workers = config.get("max_workers", 10)
 
+    # 프롬프트 템플릿 로드
+    prompt_path = config.get("prompt")
+    if prompt_path:
+        if not os.path.isabs(prompt_path):
+            prompt_path = str(input_dir / prompt_path)
+        if os.path.exists(prompt_path):
+            with open(prompt_path, encoding="utf-8") as f:
+                prompt_template = f.read()
+            print(f"프롬프트: {prompt_path}")
+        else:
+            print(f"경고: 프롬프트 파일을 찾을 수 없습니다: {prompt_path}")
+            prompt_template = DEFAULT_PROMPT_TEMPLATE
+    else:
+        prompt_template = DEFAULT_PROMPT_TEMPLATE
+
     # 원본 언어 제외
     target_langs = [lang for lang in target_langs if lang != source_lang]
 
@@ -342,8 +380,14 @@ def main():
         client = genai.Client(api_key=api_key)
 
         print(f"번역 시작: {len(target_langs)}개 언어 (모델: {gemini_model}, 병렬: {max_workers})")
-        metadata = translate_metadata(client, title, description, source_lang, target_langs, gemini_model, max_workers)
+        metadata = translate_metadata(client, title, description, source_lang, target_langs, gemini_model, prompt_template, max_workers)
         print()
+
+        # 메타데이터 저장
+        metadata_path = input_dir / "metadata.json"
+        with open(metadata_path, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, ensure_ascii=False, indent=2)
+        print(f"메타데이터 저장: {metadata_path}")
 
     # 업로드
     youtube = get_authenticated_service()
