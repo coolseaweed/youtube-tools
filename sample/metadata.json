@@ -8,72 +8,68 @@
     "title": "샘플 영상",
     "description": "다국어 업로드 테스트를 위한 샘플 영상입니다."
   },
-  "ar": {
-    "title": "فيديو العينة",
-    "description": "فيديو عينة لاختبار التحميل بلغات متعددة."
-  },
-  "cy": {
-    "title": "Fideo sampl",
-    "description": "Fideo sampl i brofi uwchlwytho amlieithog."
-  },
-  "bn": {
-    "title": "নমুনা ভিডিও",
-    "description": "মাল্টি-ল্যাঙ্গুয়েজ আপলোডের পরীক্ষামূলক ভিডিও!"
-  },
   "ca": {
     "title": "Vídeo de mostra",
-    "description": "Vídeo de mostra per a una prova de càrrega multilingüe."
+    "description": "Vídeo de prova per a proves d'upload multilingüe."
   },
-  "af": {
-    "title": "Voorbeeldvideo",
-    "description": "Hierdie is 'n voorbeeldvideo vir 'n multi-taal oplaai toets."
+  "ar": {
+    "title": "فيديو تجريبي",
+    "description": "فيديو تجريبي لاختبار التحميل متعدد اللغات."
   },
-  "bg": {
-    "title": "Примерен видеоклип",
-    "description": "Пробeн клип за тестване на мултиезични ъплоуди."
+  "az": {
+    "title": "Nümunə video",
+    "description": "Çoxdilli yükləmə testləri üçün nümunə video."
   },
   "cs": {
     "title": "Ukázkové video",
     "description": "Ukázkové video pro test nahrávání ve více jazycích."
   },
-  "az": {
-    "title": "Nümunə video",
-    "description": "Çoxdilli yükləmə testi üçün nümunə videodur."
+  "bg": {
+    "title": "Предварителен преглед",
+    "description": "Пробен клип за тест с многоезично качване."
+  },
+  "bn": {
+    "title": "নমুনা ভিডিও",
+    "description": "মাল্টি-ল্যাঙ্গুয়েজ আপলোড পরীক্ষার জন্য স্যাম্পল ভিডিও।"
+  },
+  "af": {
+    "title": "Voorbeeldvideo",
+    "description": "'n Voorbeeldvideo vir 'n veelvoudige taal-oplaaisiek."
   },
   "be": {
     "title": "Прыклад відэа",
-    "description": "Прыклад відэа для тэсту загрузкі на розных мовах."
+    "description": "Тэставы відэаролік для загрузкі на розных мовах."
+  },
+  "bs": {
+    "title": "Video sa primjerom",
+    "description": "Ovo je video za test višekratnog otpremanja."
+  },
+  "cy": {
+    "title": "Fideo sampl",
+    "description": "Fideo sampl ar gyfer profion uwchlwytho amlieithog."
   },
   "en": {
-    "title": "Sample video",
+    "title": "Sample Video",
     "description": "Sample video for multilingual upload test."
   },
-  "de": {
-    "title": "Beispielvideo",
-    "description": "Sample video for multi-language upload test."
+  "da": {
+    "title": "Eksempelvideo",
+    "description": "Dette er en prøvevideo til test af upload af flere sprog."
   },
   "es": {
     "title": "Vídeo de muestra",
-    "description": "Este es un video de muestra para probar cargas multilingües."
+    "description": "Video de ejemplo para probar subidas en varios idiomas."
   },
   "et": {
     "title": "Näidisvideo",
-    "description": "See on näidisvideo mitmekeelse üleslaadimise testi jaoks."
+    "description": "Näidisvideo mitmekeelse üleslaadimise testimiseks."
   },
-  "da": {
-    "title": "Eksempel video",
-    "description": "En sample-video til test af flersproget upload."
-  },
-  "eu": {
-    "title": "Bideo-lagin",
-    "description": "Hainbat hizkuntzatako igoeraren probetarako bideo lagin bat da hau."
-  },
-  "fi": {
-    "title": "Esimerkkivideo",
-    "description": "Monikielisten latausten testaukseen tarkoitettu esittelyvideo."
+  "de": {
+    "title": "Beispielvideo",
+    "description": "Ein Beispielvideo für den Test von mehrsprachigen Uploads."
   },
   "fa": {
-    "title": "ویدیو نمونه",
+    "title": "نمونه ویدیو",
     "description": "ویدئوی نمونه برای تست آپلود چندزبانه."
   },
   "fil": {
@@ -82,175 +78,195 @@
   },
   "el": {
     "title": "Δείγμα βίντεο",
-    "description": "Είναι ένα δοκιμαστικό βίντεο για τεστ πολλαπλών γλωσσών."
+    "description": "Ένα δείγμα βίντεο για δοκιμή πολλαπλών γλωσσών."
+  },
+  "eu": {
+    "title": "Bideoaren aurrerapena",
+    "description": "Hainbat hizkuntzatako kargaketak probatzeko bideo demoa da hau."
+  },
+  "fi": {
+    "title": "Esimerkkivideo",
+    "description": "Tämä on esittelyvideo monikielistä latausta varten."
+  },
+  "fr": {
+    "title": "Vidéo d'exemple",
+    "description": "Vidéo d'exemple pour tester les uploads multilingues."
   },
   "gu": {
-    "title": "નમૂના વીડિયો",
-    "description": "મલ્ટી-લિંગ્યુઅલ અપલોડ ટેસ્ટ માટેનો આ નમૂના વીડિયો છે."
-  },
-  "gl": {
-    "title": "Vídeo de exemplo",
-    "description": "Un vídeo de exemplo para probar cargas multilingües."
+    "title": "નમૂના વિડિઓ",
+    "description": "મલ્ટિલિંગ્વલ અપલોડ ટેસ્ટ માટે સેમ્પલ વીડિયો."
   },
   "hi": {
     "title": "नमूना वीडियो",
-    "description": "बहुभाषी अपलोड परीक्षण के लिए एक नमूना वीडियो।"
+    "description": "मल्टी-लैंग्वेज अपलोड टेस्ट के लिए एक सैंपल वीडियो 🎬"
+  },
+  "gl": {
+    "title": "Vídeo de exemplo",
+    "description": "Vídeo de mostra para proba de carga multilingüe."
   },
   "hr": {
-    "title": "Uzorni video",
-    "description": "Ovo je probni video za testiranje prijenosa na više jezika."
-  },
-  "is": {
-    "title": "Sýnishorn",
-    "description": "Prófunarmyndband fyrir fjöltyngda upphleðslu."
-  },
-  "hu": {
-    "title": "Mintavideó",
-    "description": "Ez egy mintavideó a többnyelvű feltöltési teszthez."
+    "title": "Video s uzorkom",
+    "description": "Ovo je uzorak videa za test višestrukog učitavanja."
   },
   "id": {
     "title": "Video Sampel",
     "description": "Video sampel untuk uji unggah multibahasa."
   },
-  "fr": {
-    "title": "Vidéo d'exemple",
-    "description": "Vidéo d'exemple pour tester le téléchargement multilingue."
+  "hu": {
+    "title": "Mintavideó",
+    "description": "Multinyelvű feltöltési teszthez készült minta videó."
   },
   "it": {
     "title": "Video di esempio",
-    "description": "Video di prova per il test di caricamento multilingue."
+    "description": "Video di esempio per il test di caricamento multilingue."
   },
   "hy": {
-    "title": "Նմուշային տեսանյութ",
-    "description": "բազմա լեզու վերբեռնման թեստի համար նախատեսված տեսանյութ"
+    "title": "Տեստային տեսանյութ",
+    "description": "Բազմալեզու վերբեռնման թեստի համար նախատեսված նմուշային տեսանյութ։"
+  },
+  "is": {
+    "title": "Sýnishorn",
+    "description": "Dæmi myndband fyrir fjöltyngt upphleðslumat."
   },
   "iw": {
     "title": "סרטון לדוגמה",
-    "description": "סרטון לדוגמה לבדיקת העלאת רב-לשונית."
-  },
-  "ka": {
-    "title": "სასინჯი ვიდეო",
-    "description": "다국어 업로드 테스트를 위한 샘플 영상입니다.\n#다국어 #업로드 #테스트\nhttps://youtu.be/dQw4w9WgXcQ"
-  },
-  "kk": {
-    "title": "Үлгі бейне",
-    "description": "Көп тілде жүктеу сынағына арналған бейне үлгісі."
-  },
-  "kn": {
-    "title": "Voici une vidéo d'exemple",
-    "description": "ಇದು ಬಹುಭಾಷಾ ಅಪ್‌ಲೋಡ್ ಪರೀಕ್ಷೆಗಾಗಿ ಒಂದು ಮಾದರಿ ವೀಡಿಯೊ ಆಗಿದೆ."
-  },
-  "lo": {
-    "title": "ວິດີໂອຕົວຢ່າງ",
-    "description": "ວິດີໂອຕົວຢ່າງສຳລັບການອັບໂຫຼດທົດສອບຫຼາຍພາສາ."
-  },
-  "lt": {
-    "title": "Pavyzdinis vaizdo įrašas",
-    "description": "Tai bandomasis vaizdo įrašas, skirtas daugialypės terpės įkėlimo testui."
-  },
-  "lv": {
-    "title": "Piemēra video",
-    "description": "Maza video, lai pārbaudītu daudzvalodu augšupielādi."
-  },
-  "km": {
-    "title": "វីដេអូ​គំរូ",
-    "description": "វីដេអូ​នេះ​គឺ​ជា​គំរូ​សម្រាប់​ការ​សាកល្បង​ការ​បង្ហោះ​ជា​ច្រើន​ភាសា។"
-  },
-  "ky": {
-    "title": "Үлгү видео",
-    "description": "Көп тилдүү жүктөө сыноо үчүн видеонун үлгүсү."
+    "description": "סרטון לדוגמה לבדיקת העלאת סרטונים בשפות מרובות."
   },
   "ja": {
     "title": "サンプル動画",
     "description": "多言語アップロードテスト用のサンプル動画です。"
   },
+  "ka": {
+    "title": "სამpling ვიდეო",
+    "description": "이 동영상은 다국어 업로드 테스트를 위한 샘플입니다."
+  },
+  "kk": {
+    "title": "Бейне үлгісі",
+    "description": "Көп тілді жүктеу сынағына арналған үлгі бейне."
+  },
+  "kn": {
+    "title": "மாதிரி வீடியோ",
+    "description": "ಬಹುವಿಧ ಭಾಷಾ ಅಪ್‌ಲೋಡ್ ಪರೀಕ್ಷೆಗಾಗಿ ಒಂದು ಮಾದರಿ ವೀಡಿಯೊ."
+  },
+  "km": {
+    "title": "វីដេអូ​គំរូ",
+    "description": "វីដេអូ​នេះ​គឺ​ជា​គំរូ​សម្រាប់​ការ​សាកល្បង​ផ្ទុក​ឯកសារ​ច្រើន​ភាសា។"
+  },
+  "ky": {
+    "title": "Үлгү видео",
+    "description": "Көп тилде жүктөө тести үчүн үлгү видео."
+  },
+  "lo": {
+    "title": "ຕົວຢ່າງວິດີໂອ",
+    "description": "ວິດີໂອຕົວຢ່າງສຳລັບການທົດສອບການອັບໂຫຼດຫຼາຍພາສາ."
+  },
+  "lt": {
+    "title": "Pavyzdinis vaizdo įrašas",
+    "description": "Tai bandomasis vaizdo įrašas, skirtas kelių kalbų įkėlimui."
+  },
+  "lv": {
+    "title": "Paraugs video",
+    "description": "Mūsu daudzvalodu augšupielādes testēšanas demonstrācijas video."
+  },
   "mk": {
     "title": "Пробно видео",
-    "description": "Ова е видео за тест со повеќе јазици."
+    "description": "Примерокот видео за тест за мултијазично прикачување."
   },
   "ml": {
     "title": "സാംപിൾ വീഡിയോ",
-    "description": "വിവിധ ഭാഷകളിൽ അപ്‌ലോഡ് ചെയ്യുന്നതിനുള്ള ഒരു സാമ്പിൾ വീഡിയോ ആണിത്."
+    "description": "പല ഭാഷകളിലുള്ള അപ്‌ലോഡ് ടെസ്റ്റിനായുള്ള ഒരു സാമ്പിൾ വീഡിയോ ആണിത്."
+  },
+  "mr": {
+    "title": "नमुना व्हिडिओ",
+    "description": "हा बहुभाषिक अपलोड चाचणीसाठी एक नमुना व्हिडिओ आहे."
+  },
+  "ms": {
+    "title": "Video sampel",
+    "description": "Video sampel untuk uji unggah multibahasa."
+  },
+  "mn": {
+    "title": "**Шүүрхий үйлчлүүлэгч**",
+    "description": "다국어 업로드 테스트를 위한 샘플 영상입니다."
   },
   "ne": {
     "title": "नमूना भिडियो",
-    "description": "बहुभाषी अपलोड परीक्षणको लागि नमूना भिडियो।"
-  },
-  "ms": {
-    "title": "Vídeo de exemplo",
-    "description": "Video sampel untuk ujian unggahan multibahasa."
-  },
-  "mn": {
-    "title": "Sample video",
-    "description": "다국어 업로드 테스트를 위한 샘플 영상입니다."
-  },
-  "my": {
-    "title": "နမူနာဗီဒီယို",
-    "description": "다국어 업로드 테스트를 위한 샘플 영상입니다."
+    "description": "बहुभाषी अपलोड परीक्षणका लागि यो एक नमूना भिडियो हो।"
   },
   "nl": {
     "title": "Voorbeeldvideo",
-    "description": "Dit is een voorbeeldvideo voor een meertalige uploadtest."
+    "description": "Sample video for multilingual upload test."
+  },
+  "my": {
+    "title": "နမူနာဗီဒီယို",
+    "description": "이것은 다국어 업로드를 테스트하기 위한 샘플 영상입니다."
   },
   "no": {
-    "title": "Prøvevideo",
+    "title": "Eksempelvideo",
     "description": "Testvideo for flerspråklig opplasting."
-  },
-  "pa": {
-    "title": "ਨਮੂਨਾ ਵੀਡੀਓ",
-    "description": "ਬਹੁ-ਭਾਸ਼ਾਈ ਅੱਪਲੋਡ ਟੈਸਟ ਲਈ ਇੱਕ ਨਮੂਨਾ ਵੀਡੀਓ।"
-  },
-  "pl": {
-    "title": "Przykładowe wideo",
-    "description": "Przykładowy filmik do testu multi-upload."
-  },
-  "ro": {
-    "title": "Vídeo de amostra",
-    "description": "Acesta este un videoclip de probă pentru testarea încărcărilor în mai multe limbi."
   },
   "pt": {
     "title": "Vídeo de exemplo",
-    "description": "Vídeo de teste para upload multilíngue."
+    "description": "Vídeo de teste de upload multilíngue."
+  },
+  "pl": {
+    "title": "Przykładowy film",
+    "description": "Przykładowy filmik do testu wielojęzycznego."
+  },
+  "pa": {
+    "title": "ਨਮੂਨਾ ਵੀਡੀਓ",
+    "description": "ਇਹ ਮਲਟੀਲੈਂਗੁਅਲ ਅਪਲੋਡ ਟੈਸਟ ਲਈ ਇੱਕ ਸੈਂਪਲ ਵੀਡੀਓ ਹੈ।"
+  },
+  "ro": {
+    "title": "Vídeo de demonstração",
+    "description": "Acesta este un videoclip de probă pentru testarea încărcărilor multilingve."
   },
   "ru": {
-    "title": "Пример видео",
-    "description": "Тестовое видео для многоязычной загрузки."
+    "title": "Демонстрационное видео",
+    "description": "Это тестовое видео для многоязычной загрузки."
   },
   "sk": {
     "title": "Ukážkové video",
-    "description": "Toto je vzorové video na test nahrávania vo viacerých jazykoch."
+    "description": "Toto je ukážkové video na test nahrávania vo viacerých jazykoch."
   },
-  "sr": {
-    "title": "Сампл видео",
-    "description": "Ovo je probni video za test uploadovanje na više jezika."
-  },
-  "sq": {
-    "title": "Pamje demonstrative",
-    "description": "Ky është një video shembull për testin e karikimit shumëgjuhësh."
+  "sl": {
+    "title": "Ukazni posnetek",
+    "description": "Video za preizkus večjezičnega nalaganja."
   },
   "si": {
-    "title": "ආදර්ශ වීඩියෝ",
-    "description": "බහුවිධ භාෂා උඩුගත කිරීමේ පරීක්ෂණයක් සඳහා නියැදි වීඩියෝවක්."
+    "title": "නොමිලේ භාවිත කල හැකි වීඩියෝව",
+    "description": "බහුවිධ භාෂා උඩුගත කිරීමේ පරීක්ෂණය සඳහා නියැදි වීඩියෝවකි."
+  },
+  "sq": {
+    "title": "Kënaqu me pamjet",
+    "description": "Ky është një video shembull për testimin e ngarkimit me shumë gjuhë."
+  },
+  "sr": {
+    "title": "Пример видеа",
+    "description": "Probni video za test uploadovanja na više jezika."
   },
   "sv": {
     "title": "Exempelvideo",
-    "description": "Testvideo för flerspråkig uppladdning."
-  },
-  "ta": {
-    "title": "மாதிரி வீடியோ",
-    "description": "பல மொழிகளில் பதிவேற்றப் பரிசோதனைக்கான மாதிரி காணொளி."
-  },
-  "sw": {
-    "title": "Video ya mfano",
-    "description": "Video cha mfano kwa ajili ya majaribio ya kupakia lugha nyingi."
-  },
-  "th": {
-    "title": "ตัวอย่างวิดีโอ",
-    "description": "วิดีโอตัวอย่างสำหรับการทดสอบอัปโหลดหลายภาษา"
+    "description": "En filmsnutt för att testa flerspråkiga uppladdningar."
   },
   "te": {
     "title": "నమూనా వీడియో",
-    "description": "다국어 업로드 테스트를 위한 샘플 영상입니다.\nబహుళ భాషా అప్‌లోడ్ పరీక్ష కోసం ఇది ఒక నమూనా వీడియో."
+    "description": "다국어 업로드 테스트를 위한 샘플 영상입니다."
+  },
+  "sw": {
+    "title": "Video ya mfano",
+    "description": "Video sampuli ya majaribio ya kupakia lugha nyingi."
+  },
+  "ta": {
+    "title": "மாதிரி வீடியோ",
+    "description": "பல்வேறு மொழிகளில் பதிவேற்றுவதை சோதிக்கும் மாதிரி வீடியோ இது."
+  },
+  "th": {
+    "title": "วิดีโอตัวอย่าง",
+    "description": "วิดีโอตัวอย่างสำหรับการทดสอบอัปโหลดหลายภาษา"
+  },
+  "uk": {
+    "title": "Приклад відео",
+    "description": "Цей зразок відео для тестування багатомовного завантаження."
   },
   "tr": {
     "title": "Örnek Video",
@@ -258,30 +274,26 @@
   },
   "ur": {
     "title": "نمونہ ویڈیو",
-    "description": "یہ ملٹی لنگوئل اپ لوڈ ٹیسٹ کے لیے ایک نمونہ ویڈیو ہے۔"
+    "description": "یہ ملٹی لنگوئل اپلوڈ ٹیسٹ کے لیے ایک نمونہ ویڈیو ہے۔"
+  },
+  "zh-CN": {
+    "title": "示例视频",
+    "description": "多语言上传测试的示例视频。"
   },
   "vi": {
     "title": "Video mẫu",
-    "description": "Đây là video mẫu cho thử nghiệm tải lên đa ngôn ngữ."
+    "description": "Video thử nghiệm tải lên đa ngôn ngữ."
   },
   "uz": {
     "title": "Namuna video",
-    "description": "Multilingual upload tests uchun namuna videolavha."
-  },
-  "uk": {
-    "title": "Приклад відео",
-    "description": "Це зразкове відео для тестування багатомовного завантаження."
+    "description": "Ko'p tilli yuklash testlari uchun namuna video."
   },
   "zh-TW": {
-    "title": "試播影片",
-    "description": "這是為了多國語言上傳測試的示範影片。"
-  },
-  "zh-CN": {
-    "title": "试看片段",
-    "description": "多语言上传测试的示例视频。"
+    "title": "預告影片",
+    "description": "這是一部多語言上傳測試的範例影片。"
   },
   "zu": {
-    "title": "Isiqephu samavidiyo",
-    "description": "Le yividiyo yesampula yokuhlola ukulayisha ngezilimi eziningi."
+    "title": "Isampula levidiyo",
+    "description": "Leli yividiyo yesampula yokuhlola ukulayisha ngezilimi eziningi."
   }
 }

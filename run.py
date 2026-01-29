@@ -227,18 +227,43 @@ YOUTUBE_LANG_MAP = {
     "iw": "he",  # Hebrew
     "zh-CN": "zh-Hans",
     "zh-TW": "zh-Hant",
+    "fil": "tl",  # Filipino -> Tagalog
 }
+
+
+def get_supported_languages(youtube) -> set:
+    """YouTube API에서 지원하는 언어 코드 목록 조회"""
+    try:
+        response = youtube.i18nLanguages().list(part="snippet").execute()
+        return {item["id"] for item in response.get("items", [])}
+    except Exception as e:
+        print(f"언어 목록 조회 실패: {e}")
+        # 기본 지원 언어 (fallback)
+        return {
+            "af", "ar", "az", "be", "bg", "bn", "bs", "ca", "cs", "da", "de",
+            "el", "en", "es", "et", "fa", "fi", "fr", "gu", "hi", "hr", "hu",
+            "hy", "id", "is", "it", "ja", "ka", "kk", "km", "kn", "ko", "ky",
+            "lo", "lt", "lv", "mk", "ml", "mn", "mr", "ms", "my", "ne", "nl",
+            "no", "pa", "pl", "pt", "ro", "ru", "si", "sk", "sl", "sq", "sr",
+            "sv", "sw", "ta", "te", "th", "tl", "tr", "uk", "ur", "uz", "vi",
+            "zh-Hans", "zh-Hant", "zu"
+        }
 
 
 def upload_video(youtube, video_path: str, metadata: dict, privacy: str) -> str:
     """영상 업로드 후 video_id 반환"""
     print(f"영상 업로드 중: {video_path}")
 
+    # YouTube 지원 언어 목록 조회
+    supported_langs = get_supported_languages(youtube)
+    print(f"  YouTube 지원 언어: {len(supported_langs)}개")
+
     default = metadata.get("default", {})
     title = default.get("title", Path(video_path).stem)
     description = default.get("description", "")
 
     localizations = {}
+    skipped = []
     for lang, data in metadata.items():
         if lang == "default" or not data:
             continue
@@ -246,13 +271,22 @@ def upload_video(youtube, video_path: str, metadata: dict, privacy: str) -> str:
         loc_title = data.get("title")
         loc_desc = data.get("description")
         if not loc_title or not loc_desc:
+            skipped.append(f"{lang}(데이터없음)")
             continue
         # YouTube API 언어 코드로 변환
         yt_lang = YOUTUBE_LANG_MAP.get(lang, lang)
+        # 지원하지 않는 언어 건너뛰기
+        if yt_lang not in supported_langs:
+            skipped.append(f"{lang}(미지원)")
+            continue
         localizations[yt_lang] = {
             "title": loc_title,
             "description": loc_desc,
         }
+
+    print(f"  적용할 언어: {len(localizations)}개")
+    if skipped:
+        print(f"  건너뛴 언어: {', '.join(skipped)}")
 
     body = {
         "snippet": {
