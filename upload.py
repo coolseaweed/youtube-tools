@@ -3,14 +3,15 @@
 YouTube 다국어 자막 일괄 업로드 스크립트
 
 사용법:
-    # 영상 업로드 + 자막 일괄 추가
-    python upload.py video.mp4 "영상 제목" --captions ./captions/
+    # 영상 업로드 + 자막 + 다국어 메타데이터
+    python upload.py video.mp4 --captions ./captions/
 
     # 기존 영상에 자막만 추가
     python upload.py --video-id "VIDEO_ID" --captions ./captions/
 """
 
 import argparse
+import json
 import os
 import sys
 from pathlib import Path
@@ -47,7 +48,7 @@ def get_authenticated_service():
                 sys.exit(1)
 
             flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-            creds = flow.run_local_server(port=0)
+            creds = flow.run_local_server(port=8080)
 
         with open(TOKEN_FILE, "w") as token:
             token.write(creds.to_json())
@@ -55,15 +56,42 @@ def get_authenticated_service():
     return build("youtube", "v3", credentials=creds)
 
 
-def upload_video(youtube, video_path: str, title: str, description: str, privacy: str) -> str:
+def load_metadata(captions_dir: str) -> dict | None:
+    """captions 폴더에서 metadata.json 로드"""
+    metadata_path = Path(captions_dir) / "metadata.json"
+    if metadata_path.exists():
+        with open(metadata_path, encoding="utf-8") as f:
+            return json.load(f)
+    return None
+
+
+def upload_video(
+    youtube, video_path: str, metadata: dict | None, privacy: str
+) -> str:
     """영상 업로드 후 video_id 반환"""
     print(f"영상 업로드 중: {video_path}")
+
+    # 기본 제목/설명
+    default = metadata.get("default", {}) if metadata else {}
+    title = default.get("title", Path(video_path).stem)
+    description = default.get("description", "")
+
+    # localizations 구성 (default 제외)
+    localizations = {}
+    if metadata:
+        for lang, data in metadata.items():
+            if lang != "default":
+                localizations[lang] = {
+                    "title": data.get("title", title),
+                    "description": data.get("description", description),
+                }
 
     body = {
         "snippet": {
             "title": title,
             "description": description,
             "categoryId": "22",  # People & Blogs
+            "defaultLanguage": default.get("language", "en"),
         },
         "status": {
             "privacyStatus": privacy,
@@ -71,9 +99,16 @@ def upload_video(youtube, video_path: str, title: str, description: str, privacy
         },
     }
 
+    if localizations:
+        body["localizations"] = localizations
+
     media = MediaFileUpload(video_path, chunksize=-1, resumable=True)
 
-    request = youtube.videos().insert(part="snippet,status", body=body, media_body=media)
+    parts = "snippet,status"
+    if localizations:
+        parts += ",localizations"
+
+    request = youtube.videos().insert(part=parts, body=body, media_body=media)
 
     response = None
     while response is None:
@@ -83,7 +118,61 @@ def upload_video(youtube, video_path: str, title: str, description: str, privacy
 
     video_id = response["id"]
     print(f"영상 업로드 완료: https://youtube.com/watch?v={video_id}")
+
+    if localizations:
+        print(f"다국어 메타데이터 적용: {', '.join(localizations.keys())}")
+
     return video_id
+
+
+def update_localizations(youtube, video_id: str, metadata: dict) -> bool:
+    """기존 영상에 다국어 메타데이터 업데이트"""
+    try:
+        # 기존 영상 정보 가져오기
+        video_response = youtube.videos().list(
+            part="snippet,localizations", id=video_id
+        ).execute()
+
+        if not video_response.get("items"):
+            print(f"오류: 영상을 찾을 수 없습니다: {video_id}")
+            return False
+
+        video = video_response["items"][0]
+        snippet = video["snippet"]
+
+        # localizations 구성
+        localizations = {}
+        default = metadata.get("default", {})
+
+        for lang, data in metadata.items():
+            if lang != "default":
+                localizations[lang] = {
+                    "title": data.get("title", snippet["title"]),
+                    "description": data.get("description", snippet.get("description", "")),
+                }
+
+        if not localizations:
+            return True
+
+        # 업데이트
+        body = {
+            "id": video_id,
+            "snippet": {
+                "title": default.get("title", snippet["title"]),
+                "description": default.get("description", snippet.get("description", "")),
+                "categoryId": snippet["categoryId"],
+            },
+            "localizations": localizations,
+        }
+
+        youtube.videos().update(part="snippet,localizations", body=body).execute()
+
+        print(f"다국어 메타데이터 업데이트: {', '.join(localizations.keys())}")
+        return True
+
+    except Exception as e:
+        print(f"메타데이터 업데이트 오류: {e}")
+        return False
 
 
 def upload_caption(youtube, video_id: str, caption_path: Path, language: str) -> bool:
@@ -139,10 +228,8 @@ def main():
     parser = argparse.ArgumentParser(description="YouTube 다국어 자막 일괄 업로드")
 
     parser.add_argument("video", nargs="?", help="업로드할 영상 파일 경로")
-    parser.add_argument("title", nargs="?", help="영상 제목")
     parser.add_argument("--video-id", help="기존 영상 ID (자막만 추가할 경우)")
-    parser.add_argument("--captions", required=True, help="자막 폴더 경로")
-    parser.add_argument("--description", default="", help="영상 설명")
+    parser.add_argument("--captions", required=True, help="자막 폴더 경로 (metadata.json 포함)")
     parser.add_argument(
         "--privacy",
         default="private",
@@ -153,8 +240,8 @@ def main():
     args = parser.parse_args()
 
     # 유효성 검사
-    if not args.video_id and not (args.video and args.title):
-        parser.error("영상 파일과 제목이 필요하거나, --video-id를 지정해야 합니다.")
+    if not args.video_id and not args.video:
+        parser.error("영상 파일이 필요하거나, --video-id를 지정해야 합니다.")
 
     if args.video and not os.path.exists(args.video):
         print(f"오류: 영상 파일을 찾을 수 없습니다: {args.video}")
@@ -164,6 +251,11 @@ def main():
         print(f"오류: 자막 폴더를 찾을 수 없습니다: {args.captions}")
         sys.exit(1)
 
+    # 메타데이터 로드
+    metadata = load_metadata(args.captions)
+    if metadata:
+        print(f"메타데이터 로드: {args.captions}/metadata.json")
+
     # 인증
     youtube = get_authenticated_service()
 
@@ -171,10 +263,12 @@ def main():
     if args.video_id:
         video_id = args.video_id
         print(f"기존 영상 사용: {video_id}")
+
+        # 기존 영상에 메타데이터 업데이트
+        if metadata:
+            update_localizations(youtube, video_id, metadata)
     else:
-        video_id = upload_video(
-            youtube, args.video, args.title, args.description, args.privacy
-        )
+        video_id = upload_video(youtube, args.video, metadata, args.privacy)
 
     # 자막 업로드
     success, failed = upload_captions(youtube, video_id, args.captions)
@@ -185,8 +279,8 @@ def main():
     print("=" * 50)
     print(f"영상 ID: {video_id}")
     print(f"영상 URL: https://youtube.com/watch?v={video_id}")
-    print(f"성공: {len(success)}개 - {', '.join(success) if success else '없음'}")
-    print(f"실패: {len(failed)}개 - {', '.join(failed) if failed else '없음'}")
+    print(f"자막 성공: {len(success)}개 - {', '.join(success) if success else '없음'}")
+    print(f"자막 실패: {len(failed)}개 - {', '.join(failed) if failed else '없음'}")
 
     if failed:
         sys.exit(1)

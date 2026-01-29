@@ -1,0 +1,15 @@
+1
+00:00:00,000 --> 00:00:05,000
+Hello, this is a sample video.
+
+2
+00:00:05,000 --> 00:00:15,000
+This is a test subtitle.
+
+3
+00:00:15,000 --> 00:00:25,000
+Testing multi-language caption upload.
+
+4
+00:00:25,000 --> 00:00:30,000
+Thank you.

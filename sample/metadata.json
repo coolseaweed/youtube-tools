@@ -1,0 +1,19 @@
+{
+  "default": {
+    "title": "Sample Video",
+    "description": "This is a sample video for testing multi-language uploads.",
+    "language": "en"
+  },
+  "ko": {
+    "title": "샘플 영상",
+    "description": "다국어 업로드 테스트를 위한 샘플 영상입니다."
+  },
+  "en": {
+    "title": "Sample Video",
+    "description": "This is a sample video for testing multi-language uploads."
+  },
+  "ja": {
+    "title": "サンプル動画",
+    "description": "多言語アップロードテスト用のサンプル動画です。"
+  }
+}
