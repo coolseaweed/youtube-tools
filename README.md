@@ -11,7 +11,7 @@ YouTube 영상 업로드 및 다국어 자막 일괄 업로드 도구
 ## 설치
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
 ## 사전 준비 (Google Cloud)
@@ -28,13 +28,13 @@ pip install -r requirements.txt
 
 ```bash
 # 영상 업로드 + 자막 일괄 추가
-python upload.py video.mp4 "영상 제목" --captions ./captions/
+uv run python upload.py video.mp4 "영상 제목" --captions ./captions/
 
 # 기존 영상에 자막만 추가
-python upload.py --video-id "VIDEO_ID" --captions ./captions/
+uv run python upload.py --video-id "VIDEO_ID" --captions ./captions/
 
 # 옵션
-python upload.py video.mp4 "제목" --captions ./captions/ \
+uv run python upload.py video.mp4 "제목" --captions ./captions/ \
     --description "영상 설명" \
     --privacy private  # public, unlisted, private
 ```

@@ -1,0 +1,19 @@
+# Credentials
+client_secrets.json
+token.json
+
+# Virtual environment
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
