@@ -1,0 +1,14 @@
+[project]
+name = "youtube-tools"
+version = "0.1.0"
+description = "YouTube 영상 업로드 및 다국어 자막 일괄 업로드 도구"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "google-api-python-client>=2.0.0",
+    "google-auth-oauthlib>=1.0.0",
+    "google-auth-httplib2>=0.1.0",
+]
+
+[project.scripts]
+upload = "upload:main"
